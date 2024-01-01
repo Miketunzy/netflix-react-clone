@@ -14,22 +14,22 @@ pipeline {
             steps {
                 script {
                     // build image
-                    docker.build("128296981560.dkr.ecr.ca-central-1.amazonaws.com/netflix-oct:v1")
+                    docker.build("128296981560.dkr.ecr.us-east-1.amazonaws.com/netflix-app")
                }
             }
         }
         stage('Trivy Scan (Aqua)') {
             steps {
-                sh 'trivy image --format template --output trivy_report.html 128296981560.dkr.ecr.ca-central-1.amazonaws.com/netflix-oct:v1'
+                sh 'trivy image --format template --output trivy_report.html 128296981560.dkr.ecr.us-east-1.amazonaws.com/netflix-app''
             }
        }
         stage('Push to ECR') {
             steps {
                 script{
                     //https://<AwsAccountNumber>.dkr.ecr.<region>.amazonaws.com/netflix-app', 'ecr:<region>:<credentialsId>
-                    docker.withRegistry('https://128296981560.dkr.ecr.ca-central-1.amazonaws.com/netflix-oct', 'ecr:ca-central-1:miketuznyecr') {
+                    docker.withRegistry('https://128296981560.dkr.ecr.us-east-1.amazonaws.com/netflix-app/', 'ecr:us-east-1:miketunzyecr') {
                     // build image
-                    def myImage = docker.build("128296981560.dkr.ecr.ca-central-1.amazonaws.com/netflix-oct:v1")
+                    def myImage = docker.build("128296981560.dkr.ecr.us-east-1.amazonaws.com/netflix-app")
                     // push image
                     myImage.push()
                     }
