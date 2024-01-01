@@ -20,7 +20,7 @@ pipeline {
         }
         stage('Trivy Scan (Aqua)') {
             steps {
-                sh 'trivy image --format template --output trivy_report.html 128296981560.dkr.ecr.us-east-1.amazonaws.com/netflix-app''
+                sh 'trivy image --format template --output trivy_report.html 128296981560.dkr.ecr.us-east-1.amazonaws.com/netflix-app'
             }
        }
         stage('Push to ECR') {
